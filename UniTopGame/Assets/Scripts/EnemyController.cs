@@ -104,6 +104,8 @@ public class EnemyController : MonoBehaviour
         var animator = GetComponent<Animator>();
         animator.Play(deadAnime);
         Destroy(gameObject, 0.5f);
+        
+        SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
     }
 
     private string GetAnime(float angle)

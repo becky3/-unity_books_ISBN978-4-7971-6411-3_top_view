@@ -67,10 +67,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateHP()
     {
-        if (PlayerController.gameState == PlayerController.GameState.gameOver)
-        {
-            return;
-        }
+        // if (PlayerController.gameState == PlayerController.GameState.gameOver)
+        // {
+        //     return;
+        // }
 
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -84,6 +84,7 @@ public class UIManager : MonoBehaviour
         }
 
         hp = PlayerController.hp;
+        Debug.Log("HP:" + hp);
         switch (hp)
         {
             case <= 0:
@@ -113,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     public void Retry()
     {
-        PlayerController.hp = 3;
+        PlayerPrefs.SetInt("PlayerHP", 3);
         SceneManager.LoadScene(retrySceneName);
     }
 

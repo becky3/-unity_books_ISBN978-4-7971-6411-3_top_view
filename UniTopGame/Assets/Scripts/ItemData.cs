@@ -45,6 +45,7 @@ public class ItemData : MonoBehaviour
                 if (PlayerController.hp < 3)
                 {
                     PlayerController.hp++;
+                    PlayerPrefs.SetInt("PlayerHP", PlayerController.hp);
                 }
                 break;
         }
@@ -54,6 +55,8 @@ public class ItemData : MonoBehaviour
         itemBody.gravityScale = 2.5f;
         itemBody.AddForce(new Vector2(0,6), ForceMode2D.Impulse);
         Destroy(gameObject, 0.5f);
+        
+        SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
 
     }
 }
