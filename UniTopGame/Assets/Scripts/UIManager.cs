@@ -122,6 +122,22 @@ public class UIManager : MonoBehaviour
     {
         mainImage.SetActive(false);
     }
+
+    public void GameClear()
+    {
+        mainImage.SetActive(true);
+        mainImage.GetComponent<Image>().sprite = gameClearSpr;
+        
+        inputPanel.SetActive(false);
+        PlayerController.gameState = PlayerController.GameState.gameClear;
+        Invoke(nameof(GoToTitle), 3f);
+    }
+
+    void GoToTitle()
+    {
+        PlayerPrefs.DeleteKey("LastScene");
+        SceneManager.LoadScene("Title");
+    }
 }
 
     

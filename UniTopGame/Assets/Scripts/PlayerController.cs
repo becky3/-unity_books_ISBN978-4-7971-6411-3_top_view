@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     {
         playing,
         gameOver,
+        gameClear,
     }
 
     public float speed = 3f;
