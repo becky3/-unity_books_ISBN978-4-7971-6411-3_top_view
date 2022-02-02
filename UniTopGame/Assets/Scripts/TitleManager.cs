@@ -17,6 +17,8 @@ public class TitleManager : MonoBehaviour
         continueButton
             .GetComponent<Button>()
             .interactable = sceneName != "";
+        
+        SoundManager.soundManager.PlayBgm(SoundManager.BGMType.Title);
     }
 
     // Update is called once per frame

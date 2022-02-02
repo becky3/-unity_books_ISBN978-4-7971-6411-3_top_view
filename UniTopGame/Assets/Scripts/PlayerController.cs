@@ -162,6 +162,9 @@ public class PlayerController : MonoBehaviour
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
         GetComponent<Animator>().Play(deadAnime);
         Destroy(gameObject, 1f);
+        
+        SoundManager.soundManager.StopBgm();
+        SoundManager.soundManager.SEPlay(SoundManager.SeType.GameOver);
     }
 
     public void SetAxis(float h, float v)

@@ -37,7 +37,10 @@ public class Exit : MonoBehaviour
 
         if (doorNumber == 100)
         {
-            GameObject.FindObjectOfType<UIManager>().GameClear();   
+            SoundManager.soundManager.StopBgm();
+            SoundManager.soundManager.SEPlay(SoundManager.SeType.GameClear);
+            
+            FindObjectOfType<UIManager>().GameClear();   
         }
         else
         {

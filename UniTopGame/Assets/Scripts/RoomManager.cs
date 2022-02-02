@@ -23,6 +23,8 @@ public class RoomManager : MonoBehaviour
         
         SceneManager.LoadScene(sceneName);
 
+        
+
     }
     // Start is called before the first frame update
     private void Start()
@@ -59,6 +61,15 @@ public class RoomManager : MonoBehaviour
             player.transform.position = new Vector3(x, y);
             break;
         }
+        
+        var sceneName = PlayerPrefs.GetString("LastScene");
+
+        var bgmType = SoundManager.BGMType.InGame;
+        if (sceneName == "BossStage")
+        {
+            bgmType = SoundManager.BGMType.InBoss;
+        }
+        SoundManager.soundManager.PlayBgm(bgmType);
     }
 
     // Update is called once per frame
