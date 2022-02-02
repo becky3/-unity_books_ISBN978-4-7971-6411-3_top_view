@@ -67,10 +67,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateHP()
     {
-        if (PlayerController.gameState == PlayerController.GameState.gameOver)
-        {
-            return;
-        }
+        // if (PlayerController.gameState == PlayerController.GameState.gameOver)
+        // {
+        //     return;
+        // }
 
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -84,6 +84,7 @@ public class UIManager : MonoBehaviour
         }
 
         hp = PlayerController.hp;
+        Debug.Log("HP:" + hp);
         switch (hp)
         {
             case <= 0:
@@ -113,13 +114,32 @@ public class UIManager : MonoBehaviour
 
     public void Retry()
     {
-        PlayerController.hp = 3;
+        PlayerPrefs.SetInt("PlayerHP", 3);
+
+        SoundManager.playingBGM = SoundManager.BGMType.None;
+        
         SceneManager.LoadScene(retrySceneName);
     }
 
     void InactiveImage()
     {
         mainImage.SetActive(false);
+    }
+
+    public void GameClear()
+    {
+        mainImage.SetActive(true);
+        mainImage.GetComponent<Image>().sprite = gameClearSpr;
+        
+        inputPanel.SetActive(false);
+        PlayerController.gameState = PlayerController.GameState.gameClear;
+        Invoke(nameof(GoToTitle), 3f);
+    }
+
+    void GoToTitle()
+    {
+        PlayerPrefs.DeleteKey("LastScene");
+        SceneManager.LoadScene("Title");
     }
 }
 

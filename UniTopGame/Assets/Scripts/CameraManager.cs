@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public GameObject otherTarget;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +20,24 @@ public class CameraManager : MonoBehaviour
         {
             return;
         }
-        transform.position = new Vector3(
-            player.transform.position.x,
-            player.transform.position.y,
-            -10
-        );
+
+        if (otherTarget != null)
+        {
+            var pos = Vector2.Lerp(
+                player.transform.position,
+                otherTarget.transform.position,
+                0.5f
+            );
+            transform.position = new Vector3(pos.x, pos.y, -10);
+        }
+        else
+        {
+
+            transform.position = new Vector3(
+                player.transform.position.x,
+                player.transform.position.y,
+                -10
+            );
+        }
     }
 }

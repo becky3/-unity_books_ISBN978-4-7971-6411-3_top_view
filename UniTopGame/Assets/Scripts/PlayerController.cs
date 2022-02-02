@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     {
         playing,
         gameOver,
+        gameClear,
     }
 
     public float speed = 3f;
@@ -40,6 +41,14 @@ public class PlayerController : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         oldAnimation = downAnime;
         gameState = GameState.playing;
+
+        hp = PlayerPrefs.GetInt("PlayerHP");
+
+        if (hp <= 0)
+        {
+            hp = 3;
+            PlayerPrefs.SetInt("PlayerHP", hp);
+        } 
     }
 
     // Update is called once per frame
@@ -119,6 +128,9 @@ public class PlayerController : MonoBehaviour
         }
 
         hp--;
+        
+        PlayerPrefs.SetInt("PlayerHP", hp);
+        
         Debug.Log("Player HP" + hp);
         if (hp > 0)
         {
@@ -126,7 +138,7 @@ public class PlayerController : MonoBehaviour
             var v = (transform.position - enemy.transform.position).normalized;
             rbody.AddForce(new Vector2(v.x * 4, v.y * 4), ForceMode2D.Impulse);
             inDamage = true;
-            Invoke("DamageEnd", 0.25f);
+            Invoke(nameof(DamageEnd), 0.25f);
         }
         else
         {
@@ -150,6 +162,9 @@ public class PlayerController : MonoBehaviour
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
         GetComponent<Animator>().Play(deadAnime);
         Destroy(gameObject, 1f);
+        
+        SoundManager.soundManager.StopBgm();
+        SoundManager.soundManager.SEPlay(SoundManager.SeType.GameOver);
     }
 
     public void SetAxis(float h, float v)

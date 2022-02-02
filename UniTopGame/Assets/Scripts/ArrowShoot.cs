@@ -64,6 +64,8 @@ public class ArrowShoot : MonoBehaviour
         var body = arrowObj.GetComponent<Rigidbody2D>();
         body.AddForce(v, ForceMode2D.Impulse);
         Invoke("StopAttack", shootDelay);
+        
+        SoundManager.soundManager.SEPlay(SoundManager.SeType.Shoot);
     }
 
     public void StopAttack()

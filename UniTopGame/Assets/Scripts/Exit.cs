@@ -30,8 +30,22 @@ public class Exit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (!other.gameObject.CompareTag("Player"))
         {
+            return;
+        }
+
+        if (doorNumber == 100)
+        {
+            SoundManager.soundManager.StopBgm();
+            SoundManager.soundManager.SEPlay(SoundManager.SeType.GameClear);
+            
+            FindObjectOfType<UIManager>().GameClear();   
+        }
+        else
+        {
+            var nowScene = PlayerPrefs.GetString("LastScene");
+            SaveDataManager.SaveArrangeData(nowScene);
             RoomManager.ChangeScene(sceneName, doorNumber);
         }
     }

@@ -11,7 +11,19 @@ public class RoomManager : MonoBehaviour
     public static void ChangeScene(string sceneName, int doorNumber)
     {
         RoomManager.doorNumber = doorNumber;
+
+        var nowScene = PlayerPrefs.GetString("LastScene");
+        if (nowScene != "")
+        {
+            SaveDataManager.SaveArrangeData(nowScene);
+        }
+        PlayerPrefs.SetString("LastScene", sceneName);
+        PlayerPrefs.SetInt("LastDoor", doorNumber);
+        ItemKeeper.SaveItem();
+        
         SceneManager.LoadScene(sceneName);
+
+        
 
     }
     // Start is called before the first frame update
@@ -49,6 +61,15 @@ public class RoomManager : MonoBehaviour
             player.transform.position = new Vector3(x, y);
             break;
         }
+        
+        var sceneName = PlayerPrefs.GetString("LastScene");
+
+        var bgmType = SoundManager.BGMType.InGame;
+        if (sceneName == "BossStage")
+        {
+            bgmType = SoundManager.BGMType.InBoss;
+        }
+        SoundManager.soundManager.PlayBgm(bgmType);
     }
 
     // Update is called once per frame
